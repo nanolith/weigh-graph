@@ -1,0 +1,9 @@
+find_package(PkgConfig REQUIRED)
+
+pkg_check_modules(RCPR REQUIRED rcpr)
+
+if (${RCPR_FOUND})
+    SET(OLD_PKG_CONFIG_PATH ENV{PKG_CONFIG_PATH})
+    SET(ENV{PKG_CONFIG_PATH} ${RCPR_PREFIX}/lib/pkgconfig)
+    SET(ENV{PKG_CONFIG_PATH} ${OLD_PKG_CONFIG_PATH})
+endif(${RCPR_FOUND})
