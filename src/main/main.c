@@ -8,9 +8,13 @@
  */
 
 #include <expat.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <sys/stat.h>
-#include <weightgraph/weightgraph.h>
+
+#include "main_internal.h"
+
+RCPR_IMPORT_allocator;
 
 int main(int argc, char* argv[])
 {
