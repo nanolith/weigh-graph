@@ -7,11 +7,17 @@
  * distribution for the license terms under which this software is distributed.
  */
 
+#include <expat.h>
 #include <stdio.h>
-#include <weightgraph/config.h>
+#include <sys/stat.h>
+#include <weightgraph/weightgraph.h>
 
 int main(int argc, char* argv[])
 {
+    /* attempt to read the input file into a buffer. */
+    /* parse the XML file into a tree of values and a set of initial values. */
+    /* for each date, compute the new moving average, and update the graph. */
+
     (void)argc;
     (void)argv;
 
