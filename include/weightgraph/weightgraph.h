@@ -31,6 +31,7 @@ struct weightgraph
     RCPR_SYM(allocator)* alloc;
     RCPR_SYM(rbtree)* entries;
     double initial_average;
+    bool error;
 };
 
 /**
