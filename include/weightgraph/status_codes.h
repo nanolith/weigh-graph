@@ -17,6 +17,8 @@ extern "C" {
 #define ERROR_STAT_FAILED       77
 #define ERROR_OPEN_FAILED       78
 #define ERROR_READ_FAILED       79
+#define ERROR_PARSER_CREATE     80
+#define ERROR_XML_PARSE         81
 
 /* C++ compatibility. */
 # ifdef   __cplusplus

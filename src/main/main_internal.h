@@ -12,6 +12,11 @@
 #include <weightgraph/status_codes.h>
 #include <weightgraph/weightgraph.h>
 
+/* C++ compatibility. */
+# ifdef   __cplusplus
+extern "C" {
+# endif /*__cplusplus*/
+
 /**
  * \brief Stat and read the given file into a buffer.
  *
@@ -41,3 +46,8 @@ status main_read_file(
 status main_parse_buffer(
     weightgraph** graph, RCPR_SYM(allocator)* alloc,
     const uint8_t* buffer, size_t buffer_size);
+
+/* C++ compatibility. */
+# ifdef   __cplusplus
+}
+# endif /*__cplusplus*/
