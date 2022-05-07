@@ -14,6 +14,8 @@ SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules")
 
 #expat support
 find_package(EXPAT 2.4.8 MODULE REQUIRED)
+#rcpr package
+find_package(rcpr 0.2.1 REQUIRED)
 
 #Build config.h
 configure_file(config.h.cmake include/weightgraph/config.h)
@@ -29,10 +31,10 @@ SET(WEIGHTGRAPH_SOURCES ${WEIGHTGRAPH_MAIN_SOURCES})
 ADD_EXECUTABLE(weightgraph ${WEIGHTGRAPH_SOURCES})
 
 TARGET_COMPILE_OPTIONS(
-    weightgraph PRIVATE -O2 -Wall -Werror -Wextra -Wpedantic
+    weightgraph PRIVATE -O2 -Wall -Werror -Wextra -Wpedantic ${RCPR_CFLAGS}
                      -Wno-unused-command-line-argument)
 TARGET_LINK_LIBRARIES(
-    weightgraph PUBLIC EXPAT::EXPAT)
+    weightgraph PUBLIC EXPAT::EXPAT ${RCPR_LDFLAGS})
 
 #Install binary
 INSTALL(TARGETS weightgraph
