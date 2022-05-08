@@ -145,12 +145,12 @@ static void main_parse_end(
 }
 
 /**
- * \brief Parse a beginning averages element.
+ * \brief Parse a log entry.
  *
  * \param graph         The weightgraph AST.
  * \param attrs         The element attributes.
  */
-static void main_parse_beginning_averages(
+static void main_parse_log(
     weightgraph* graph, const char** attr)
 {
     status retval;
@@ -161,11 +161,11 @@ static void main_parse_beginning_averages(
     /* loop through the attributes. */
     for (int i = 0; 0 != attr[i]; i += 2)
     {
-        if (strcmp(attr[i], "date"))
+        if (!strcmp(attr[i], "date"))
         {
             date = attr[i + 1];
         }
-        else if (strcmp(attr[i], "weight"))
+        else if (!strcmp(attr[i], "weight"))
         {
             weight = attr[i + 1];
         }
@@ -204,18 +204,18 @@ done:
 }
 
 /**
- * \brief Parse a log element.
+ * \brief Parse a beginning averages element.
  *
  * \param graph         The weightgraph AST.
  * \param attrs         The element attributes.
  */
-static void main_parse_log(
+static void main_parse_beginning_averages(
     weightgraph* graph, const char** attr)
 {
     /* loop through the attributes. */
     for (int i = 0; 0 != attr[i]; i += 2)
     {
-        if (strcmp(attr[i], "moving-average"))
+        if (!strcmp(attr[i], "moving-average"))
         {
             graph->initial_average = atof(attr[i + 1]);
         }
