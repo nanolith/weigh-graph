@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <stdio.h>
 #include <weightgraph/status_codes.h>
 #include <weightgraph/weightgraph.h>
 
@@ -46,6 +47,44 @@ status main_read_file(
 status main_parse_buffer(
     weightgraph** graph, RCPR_SYM(allocator)* alloc,
     const uint8_t* buffer, size_t buffer_size);
+
+/**
+ * \brief Create an output graph file pointer, and write the preamble.
+ *
+ * \param fp            Pointer to receive the file pointer.
+ * \param filename      The name of the output file.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+status output_graph_create(FILE** fp, const char* filename);
+
+/**
+ * \brief Plot a weight on the graph.
+ *
+ * \param fp                Output file pointer.
+ * \param date              The date for this entry.
+ * \param weight            The weight for this entry.
+ * \param moving_average    The moving average for this entry.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+status output_graph_plot(
+    FILE* fp, const char* date, double weight, double moving_average);
+
+/**
+ * \brief Write the epilogue for the graph.
+ *
+ * \param fp                Output file pointer.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+status output_graph_finalize(FILE* fp);
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
