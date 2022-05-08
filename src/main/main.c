@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
     size_t size;
     weightgraph* graph;
     allocator* alloc;
-    FILE* out;
+    output_graph_file* out;
     rbtree_node* tmp;
     rbtree_node* nil;
     double moving_average;
@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
     moving_average = graph->initial_average;
 
     /* create the output graph file, and write the initial values. */
-    retval = output_graph_create(&out, "output.eps");
+    retval = output_graph_create(&out, alloc, "output.eps");
     if (STATUS_SUCCESS != retval)
     {
         goto cleanup_graph;
@@ -118,7 +118,11 @@ int main(int argc, char* argv[])
     goto cleanup_file;
 
 cleanup_file:
-    fclose(out);
+    release_retval = resource_release(&out->hdr);
+    if (STATUS_SUCCESS != release_retval)
+    {
+        retval = release_retval;
+    }
 
 cleanup_graph:
     release_retval = resource_release(&graph->hdr);

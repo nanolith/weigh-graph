@@ -12,17 +12,17 @@
 /**
  * \brief Write the epilogue for the graph.
  *
- * \param fp                Output file pointer.
+ * \param out               Output file pointer.
  *
  * \returns a status code indicating success or failure.
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-status output_graph_finalize(FILE* fp)
+status output_graph_finalize(output_graph_file* out)
 {
-    fprintf(fp, "%%%%PageTrailer\n");
-    fprintf(fp, "%%%%Trailer\n");
-    fprintf(fp, "%%%%EOF\n");
+    fprintf(out->fp, "%%%%PageTrailer\n");
+    fprintf(out->fp, "%%%%Trailer\n");
+    fprintf(out->fp, "%%%%EOF\n");
 
     return STATUS_SUCCESS;
 }
