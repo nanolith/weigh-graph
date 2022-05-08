@@ -67,7 +67,7 @@ status main_read_file(
 
     /* read the file contents into the buffer. */
     ssize_t read_size = read(fd, tmp, size - 1);
-    if (read_size != (ssize_t)size)
+    if (read_size != (ssize_t)(size - 1))
     {
         retval = ERROR_READ_FAILED;
         goto cleanup_tmp;
