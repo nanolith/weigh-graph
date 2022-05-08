@@ -12,7 +12,7 @@
 /**
  * \brief Plot a weight on the graph.
  *
- * \param fp                Output file pointer.
+ * \param out               Output file pointer.
  * \param date              The date for this entry.
  * \param weight            The weight for this entry.
  * \param moving_average    The moving average for this entry.
@@ -22,13 +22,14 @@
  *      - a non-zero error code on failure.
  */
 status output_graph_plot(
-    FILE* fp, const char* date, double weight, double moving_average)
+    output_graph_file* out, const char* date, double weight,
+    double moving_average)
 {
     (void)date;
     (void)weight;
 
     /* we want to move to the height of the moving average. */
-    fprintf(fp, "0 %f rmoveto\n", moving_average);
+    fprintf(out->fp, "0 %f rmoveto\n", moving_average);
 
     return STATUS_SUCCESS;
 }

@@ -49,21 +49,36 @@ status main_parse_buffer(
     const uint8_t* buffer, size_t buffer_size);
 
 /**
- * \brief Create an output graph file pointer, and write the preamble.
+ * \brief An output graph file.
+ */
+typedef struct output_graph_file output_graph_file;
+
+struct output_graph_file
+{
+    RCPR_SYM(resource) hdr;
+    RCPR_SYM(allocator)* alloc;
+    FILE* fp;
+    double xpos;
+};
+
+/**
+ * \brief Create an output graph file, and write the preamble.
  *
  * \param fp            Pointer to receive the file pointer.
+ * \param alloc         Allocator to use for this operation.
  * \param filename      The name of the output file.
  *
  * \returns a status code indicating success or failure.
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-status output_graph_create(FILE** fp, const char* filename);
+status output_graph_create(
+    output_graph_file** fp, RCPR_SYM(allocator)* alloc, const char* filename);
 
 /**
  * \brief Plot a weight on the graph.
  *
- * \param fp                Output file pointer.
+ * \param out               Output file pointer.
  * \param date              The date for this entry.
  * \param weight            The weight for this entry.
  * \param moving_average    The moving average for this entry.
@@ -73,18 +88,30 @@ status output_graph_create(FILE** fp, const char* filename);
  *      - a non-zero error code on failure.
  */
 status output_graph_plot(
-    FILE* fp, const char* date, double weight, double moving_average);
+    output_graph_file* out, const char* date, double weight,
+    double moving_average);
 
 /**
  * \brief Write the epilogue for the graph.
  *
- * \param fp                Output file pointer.
+ * \param out               Output file pointer.
  *
  * \returns a status code indicating success or failure.
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
-status output_graph_finalize(FILE* fp);
+status output_graph_finalize(output_graph_file* out);
+
+/**
+ * \brief Release an output graph file resource.
+ *
+ * \param r         The resource to release.
+ *
+ * \returns a status code indicating success or failure.
+ *      - STATUS_SUCCESS on success.
+ *      - a non-zero error code on failure.
+ */
+status output_graph_resource_release(RCPR_SYM(resource)* r);
 
 /* C++ compatibility. */
 # ifdef   __cplusplus
