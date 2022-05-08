@@ -24,11 +24,11 @@
 status output_graph_plot(
     FILE* fp, const char* date, double weight, double moving_average)
 {
-    /* stub for now. */
-    (void)fp;
     (void)date;
     (void)weight;
-    (void)moving_average;
 
-    return -1;
+    /* we want to move to the height of the moving average. */
+    fprintf(fp, "0 %f rmoveto\n", moving_average);
+
+    return STATUS_SUCCESS;
 }

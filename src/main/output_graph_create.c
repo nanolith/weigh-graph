@@ -21,9 +21,36 @@
  */
 status output_graph_create(FILE** fp, const char* filename)
 {
-    /* stub for now. */
-    (void)fp;
-    (void)filename;
+    status retval;
 
-    return -1;
+    /* open the output file for writing. */
+    *fp = fopen(filename, "w");
+    if (NULL == *fp)
+    {
+        retval = ERROR_OUTPUT_FILE_OPEN;
+        goto done;
+    }
+
+    fprintf(*fp, "%%!PS-Adobe-3.0 EPSF-3.0\n");
+    fprintf(*fp, "%%%%Creator: (weightgraph)\n");
+    fprintf(*fp, "%%%%Title: (weight-graph.eps)\n");
+    fprintf(*fp, "%%%%BoundingBox: 0 0 800 600\n");
+    fprintf(*fp, "%%%%DocumentData: Clean7Bit\n");
+    fprintf(*fp, "%%%%LanguageLevel: 1\n");
+    fprintf(*fp, "%%%%Pages: 1\n");
+    fprintf(*fp, "%%%%EndComments\n\n");
+    fprintf(*fp, "%%%%BeginDefaults\n");
+    fprintf(*fp, "%%%%PageOrientation: Landscape\n");
+    fprintf(*fp, "%%%%EndDefaults\n\n");
+    fprintf(*fp, "%%%%BeginProlog\n");
+    fprintf(*fp, "%%%%EndProlog\n");
+    fprintf(*fp, "%%%%Page: 1 1\n");
+    fprintf(*fp, "%%%%PageBoundingBox: 0 0 800 600\n");
+
+    /* success. */
+    retval = STATUS_SUCCESS;
+    goto done;
+
+done:
+    return retval;
 }
