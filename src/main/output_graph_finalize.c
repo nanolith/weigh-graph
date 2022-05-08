@@ -20,8 +20,9 @@
  */
 status output_graph_finalize(FILE* fp)
 {
-    /* stub for now. */
-    (void)fp;
+    fprintf(fp, "%%%%PageTrailer\n");
+    fprintf(fp, "%%%%Trailer\n");
+    fprintf(fp, "%%%%EOF\n");
 
-    return -1;
+    return STATUS_SUCCESS;
 }

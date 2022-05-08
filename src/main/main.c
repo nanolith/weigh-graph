@@ -27,6 +27,7 @@ int main(int argc, char* argv[])
     allocator* alloc;
     FILE* out;
     rbtree_node* tmp;
+    rbtree_node* nil;
     double moving_average;
 
     /* verify that there is a command-line argument: the filename. */
@@ -70,15 +71,18 @@ int main(int argc, char* argv[])
         goto cleanup_graph;
     }
 
+    /* get the nil node for the entry tree. */
+    nil = rbtree_nil_node(graph->entries);
+
     /* for each date, compute the new moving average, and update the graph. */
     tmp = rbtree_root_node(graph->entries);
-    if (NULL != tmp)
+    if (nil != tmp)
     {
         /* get the minimum node for the tree. */
         tmp = rbtree_minimum_node(graph->entries, tmp);
 
         /* while this node is not NULL, walk the tree. */
-        while (NULL != tmp)
+        while (nil != tmp)
         {
             /* get the entry. */
             weightgraph_entry* entry =
