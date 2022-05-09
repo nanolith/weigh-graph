@@ -20,13 +20,15 @@ RCPR_IMPORT_resource;
  * \param fp            Pointer to receive the file pointer.
  * \param alloc         Allocator to use for this operation.
  * \param filename      The name of the output file.
+ * \param old_average   The previous average.
  *
  * \returns a status code indicating success or failure.
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
 status output_graph_create(
-    output_graph_file** fp, RCPR_SYM(allocator)* alloc, const char* filename)
+    output_graph_file** fp, RCPR_SYM(allocator)* alloc, const char* filename,
+    double old_average)
 {
     status retval, release_retval;
     output_graph_file* tmp;
@@ -44,6 +46,11 @@ status output_graph_create(
     /* set initial values. */
     resource_init(&tmp->hdr, &output_graph_resource_release);
     tmp->alloc = alloc;
+    tmp->xskip = (1100.0 - 20.0) / 31.0;
+    tmp->yscale = 1100.0 / 400.0;
+    tmp->yoffset = 50.0;
+    tmp->prevx = 50;
+    tmp->prevy = old_average * tmp->yscale;
 
     /* open the output file for writing. */
     tmp->fp = fopen(filename, "w");
@@ -53,21 +60,35 @@ status output_graph_create(
         goto cleanup_tmp;
     }
 
+    /* front matter. */
     fprintf(tmp->fp, "%%!PS-Adobe-3.0 EPSF-3.0\n");
     fprintf(tmp->fp, "%%%%Creator: (weightgraph)\n");
     fprintf(tmp->fp, "%%%%Title: (weight-graph.eps)\n");
-    fprintf(tmp->fp, "%%%%BoundingBox: 0 0 800 600\n");
+    fprintf(tmp->fp, "%%%%BoundingBox: 0 0 1200 1200\n");
     fprintf(tmp->fp, "%%%%DocumentData: Clean7Bit\n");
     fprintf(tmp->fp, "%%%%LanguageLevel: 1\n");
     fprintf(tmp->fp, "%%%%Pages: 1\n");
     fprintf(tmp->fp, "%%%%EndComments\n\n");
     fprintf(tmp->fp, "%%%%BeginDefaults\n");
-    fprintf(tmp->fp, "%%%%PageOrientation: Landscape\n");
+    fprintf(tmp->fp, "%%%%PageOrientation: Portrait\n");
     fprintf(tmp->fp, "%%%%EndDefaults\n\n");
     fprintf(tmp->fp, "%%%%BeginProlog\n");
     fprintf(tmp->fp, "%%%%EndProlog\n");
+
+    /* start page. */
     fprintf(tmp->fp, "%%%%Page: 1 1\n");
-    fprintf(tmp->fp, "%%%%PageBoundingBox: 0 0 800 600\n");
+    fprintf(tmp->fp, "%%%%PageBoundingBox: 0 0 1200 1200\n");
+
+    /* draw graph boundaries. */
+    fprintf(tmp->fp, "newpath\n");
+    fprintf(tmp->fp, "50 50 moveto\n");
+    fprintf(tmp->fp, "0 1100 rlineto\n");
+    fprintf(tmp->fp, "1100 0 rlineto\n");
+    fprintf(tmp->fp, "0 -1100 rlineto\n");
+    fprintf(tmp->fp, "-1100 0 rlineto\n");
+    fprintf(tmp->fp, "closepath\n");
+    fprintf(tmp->fp, "0 0 0 setrgbcolor\n");
+    fprintf(tmp->fp, "stroke\n");
 
     /* success. */
     *fp = tmp;

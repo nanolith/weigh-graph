@@ -58,7 +58,14 @@ struct output_graph_file
     RCPR_SYM(resource) hdr;
     RCPR_SYM(allocator)* alloc;
     FILE* fp;
-    double xpos;
+    /* the skip per x plot. */
+    double xskip;
+    /* how much to scale the weight. */
+    double yscale;
+    /* how much to add to the weight to correct the graph to zero. */
+    double yoffset;
+    double prevx;
+    double prevy;
 };
 
 /**
@@ -67,13 +74,15 @@ struct output_graph_file
  * \param fp            Pointer to receive the file pointer.
  * \param alloc         Allocator to use for this operation.
  * \param filename      The name of the output file.
+ * \param old_average   The previous average.
  *
  * \returns a status code indicating success or failure.
  *      - STATUS_SUCCESS on success.
  *      - a non-zero error code on failure.
  */
 status output_graph_create(
-    output_graph_file** fp, RCPR_SYM(allocator)* alloc, const char* filename);
+    output_graph_file** fp, RCPR_SYM(allocator)* alloc, const char* filename,
+    double old_average);
 
 /**
  * \brief Plot a weight on the graph.
