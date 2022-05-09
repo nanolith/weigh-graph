@@ -60,7 +60,7 @@ status output_graph_plot(
             out->fp, "%lf %lf lineto\n", out->xskip + out->prevx,
             weight * out->yscale);
 
-        /* finish the line in green for a sinker. */
+        /* finish the line in blue for a sinker. */
         fprintf(out->fp, "closepath\n");
         fprintf(out->fp, "0 0 1 setrgbcolor\n");
         fprintf(out->fp, "stroke\n");
