@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
     moving_average = graph->initial_average;
 
     /* create the output graph file, and write the initial values. */
-    retval = output_graph_create(&out, alloc, "output.eps");
+    retval = output_graph_create(&out, alloc, "output.eps", moving_average);
     if (STATUS_SUCCESS != retval)
     {
         goto cleanup_graph;
