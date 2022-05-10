@@ -131,6 +131,14 @@ status output_graph_plot(
     fprintf(out->fp, "0 0 0 setrgbcolor\n");
     fprintf(out->fp, "fill\n");
 
+    /* add the date to the bottom. */
+    fprintf(out->fp, "/Courier-Bold findfont 15 scalefont setfont\n");
+    fprintf(out->fp, "(%s) dup stringwidth pop\n", date);
+    fprintf(out->fp, "45 exch sub\n");
+    fprintf(
+        out->fp, "%lf exch moveto gsave 90 rotate show grestore\n",
+        out->xskip + out->prevx);
+
     /* adjust the x and y values. */
     out->prevx += out->xskip;
     out->prevy = moving_average * out->yscale;
