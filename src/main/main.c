@@ -129,6 +129,9 @@ int main(int argc, char* argv[])
         goto cleanup_file;
     }
 
+    /* output the new moving average. */
+    printf("Final moving average: %lf\n", moving_average);
+
     /* success. */
     retval = STATUS_SUCCESS;
     goto cleanup_file;
