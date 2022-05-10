@@ -10,9 +10,9 @@ looks like this:
 ```xml
 <weight-log>
     <beginning-averages moving-average="130.5"/>
-    <log date="20220501" weight="127.2"/>
-    <log date="20220502" weight="126.8"/>
-    <log date="20220503" weight="127.0"/>
+    <log date="05/01" weight="127.2"/>
+    <log date="05/02" weight="126.8"/>
+    <log date="05/03" weight="127.0"/>
 </weight-log>
 ```
 
