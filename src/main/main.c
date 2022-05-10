@@ -29,6 +29,8 @@ int main(int argc, char* argv[])
     rbtree_node* tmp;
     rbtree_node* nil;
     double moving_average;
+    double average_array[10];
+    int index = 0;
 
     /* verify that there is a command-line argument: the filename. */
     if (argc <= 1)
@@ -63,6 +65,11 @@ int main(int argc, char* argv[])
 
     /* start the moving average with the initial average. */
     moving_average = graph->initial_average;
+    /* build the initial average array. */
+    for (int i = 0; i < 10; ++i)
+    {
+        average_array[i] = moving_average;
+    }
 
     /* create the output graph file, and write the initial values. */
     retval = output_graph_create(&out, alloc, "output.eps", moving_average);
@@ -89,8 +96,17 @@ int main(int argc, char* argv[])
                 (weightgraph_entry*)rbtree_node_value(graph->entries, tmp);
 
             /* compute the updated moving average. */
-            moving_average *= 0.9; /* previous entries are weighted by 90%. */
-            moving_average += (entry->weight * 0.1); /* this entry by 10%. */
+            average_array[index] = entry->weight;
+            ++index;
+            if (index >= 10)
+            {
+                index = 0;
+            }
+            moving_average = 0;
+            for (int i = 0; i < 10; ++i)
+            {
+                moving_average += average_array[i] * 0.1;
+            }
 
             /* plot this entry. */
             retval =
