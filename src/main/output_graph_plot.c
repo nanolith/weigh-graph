@@ -32,12 +32,12 @@ status output_graph_plot(
     fprintf(out->fp, "newpath\n");
 
     /* start at the previous x and y values. */
-    fprintf(out->fp, "%lf %lf moveto\n", out->prevx, out->prevy);
+    fprintf(out->fp, "%lf %lf moveto\n", out->prevx, out->prevy + out->yoffset);
 
     /* draw a line to the new position. */
     fprintf(
         out->fp, "%lf %lf lineto\n", out->xskip + out->prevx,
-        moving_average * out->yscale);
+        moving_average * out->yscale + out->yoffset);
 
     /* finish the line. */
     fprintf(out->fp, "closepath\n");
@@ -53,12 +53,12 @@ status output_graph_plot(
         /* start at the moving average location. */
         fprintf(
             out->fp, "%lf %lf moveto\n", out->xskip + out->prevx,
-            moving_average * out->yscale);
+            moving_average * out->yscale + out->yoffset);
 
         /* draw a line to the weight. */
         fprintf(
             out->fp, "%lf %lf lineto\n", out->xskip + out->prevx,
-            weight * out->yscale);
+            weight * out->yscale + out->yoffset);
 
         /* finish the line in blue for a sinker. */
         fprintf(out->fp, "closepath\n");
@@ -69,16 +69,16 @@ status output_graph_plot(
         fprintf(out->fp, "newpath\n");
         fprintf(
             out->fp, "%lf %lf moveto\n", out->xskip + out->prevx - 4.0,
-            weight * out->yscale + 4.0);
+            weight * out->yscale + 4.0 + out->yoffset);
         fprintf(
             out->fp, "%lf %lf lineto\n", out->xskip + out->prevx + 4.0,
-            weight * out->yscale + 4.0);
+            weight * out->yscale + 4.0 + out->yoffset);
         fprintf(
             out->fp, "%lf %lf lineto\n", out->xskip + out->prevx,
-            weight * out->yscale - 4.0);
+            weight * out->yscale - 4.0 + out->yoffset);
         fprintf(
             out->fp, "%lf %lf lineto\n", out->xskip + out->prevx - 4.0,
-            weight * out->yscale + 4.0);
+            weight * out->yscale + 4.0 + out->yoffset);
         fprintf(out->fp, "closepath\n");
         fprintf(out->fp, "0 0 1 setrgbcolor\n");
         fprintf(out->fp, "fill\n");
@@ -92,12 +92,12 @@ status output_graph_plot(
         /* start at the moving average location. */
         fprintf(
             out->fp, "%lf %lf moveto\n", out->xskip + out->prevx,
-            moving_average * out->yscale);
+            moving_average * out->yscale + out->yoffset);
 
         /* draw a line to the weight. */
         fprintf(
             out->fp, "%lf %lf lineto\n", out->xskip + out->prevx,
-            weight * out->yscale);
+            weight * out->yscale + out->yoffset);
 
         /* finish the line in red for a floater. */
         fprintf(out->fp, "closepath\n");
@@ -108,16 +108,16 @@ status output_graph_plot(
         fprintf(out->fp, "newpath\n");
         fprintf(
             out->fp, "%lf %lf moveto\n", out->xskip + out->prevx - 4.0,
-            weight * out->yscale - 4.0);
+            weight * out->yscale - 4.0 + out->yoffset);
         fprintf(
             out->fp, "%lf %lf lineto\n", out->xskip + out->prevx + 4.0,
-            weight * out->yscale - 4.0);
+            weight * out->yscale - 4.0 + out->yoffset);
         fprintf(
             out->fp, "%lf %lf lineto\n", out->xskip + out->prevx,
-            weight * out->yscale + 4.0);
+            weight * out->yscale + 4.0 + out->yoffset);
         fprintf(
             out->fp, "%lf %lf lineto\n", out->xskip + out->prevx - 4.0,
-            weight * out->yscale - 4.0);
+            weight * out->yscale - 4.0 + out->yoffset);
         fprintf(out->fp, "closepath\n");
         fprintf(out->fp, "1 0 0 setrgbcolor\n");
         fprintf(out->fp, "fill\n");
@@ -127,7 +127,7 @@ status output_graph_plot(
     fprintf(out->fp, "newpath\n");
     fprintf(
         out->fp, "%lf %lf 5 0 360 arc closepath\n", out->xskip + out->prevx,
-        moving_average * out->yscale);
+        moving_average * out->yscale + out->yoffset);
     fprintf(out->fp, "0 0 0 setrgbcolor\n");
     fprintf(out->fp, "fill\n");
 

@@ -90,6 +90,29 @@ status output_graph_create(
     fprintf(tmp->fp, "0 0 0 setrgbcolor\n");
     fprintf(tmp->fp, "stroke\n");
 
+    /* create ticks on Y-axis. */
+    for (int i = 5; i <= 400; i += 5)
+    {
+        fprintf(tmp->fp, "newpath\n");
+        fprintf(
+            tmp->fp, "50 %lf moveto\n",
+            ((double)i) * tmp->yscale + tmp->yoffset);
+        fprintf(tmp->fp, "5 0 rlineto\n");
+        fprintf(tmp->fp, "closepath\n");
+        fprintf(tmp->fp, "0 0 0 setrgbcolor\n");
+        fprintf(tmp->fp, "stroke\n");
+
+        if ((i % 10) == 0)
+        {
+            fprintf(tmp->fp, "/Courier-Bold findfont 15 scalefont setfont\n");
+            fprintf(tmp->fp, "(%d) dup stringwidth pop\n", i);
+            fprintf(tmp->fp, "45 exch sub\n");
+            fprintf(
+                tmp->fp, "%lf moveto show\n",
+                ((double)i) * tmp->yscale + tmp->yoffset);
+        }
+    }
+
     /* success. */
     *fp = tmp;
     retval = STATUS_SUCCESS;
