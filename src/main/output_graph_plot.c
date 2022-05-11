@@ -82,6 +82,24 @@ status output_graph_plot(
         fprintf(out->fp, "closepath\n");
         fprintf(out->fp, "0 0 1 setrgbcolor\n");
         fprintf(out->fp, "fill\n");
+
+        /* print the moving average. */
+        fprintf(out->fp, "0 0 0 setrgbcolor\n");
+        fprintf(out->fp, "/Courier findfont 8 scalefont setfont\n");
+        fprintf(out->fp, "(%3.1lf) dup stringwidth pop\n", moving_average);
+        fprintf(
+            out->fp, "2 div %lf exch sub %lf moveto show\n",
+            out->xskip + out->prevx,
+            moving_average * out->yscale + out->yoffset + 15.0);
+
+        /* print the weight. */
+        fprintf(out->fp, "0 0 1 setrgbcolor\n");
+        fprintf(out->fp, "/Courier findfont 8 scalefont setfont\n");
+        fprintf(out->fp, "(%3.1lf) dup stringwidth pop\n", weight);
+        fprintf(
+            out->fp, "2 div %lf exch sub %lf moveto show\n",
+            out->xskip + out->prevx,
+            weight * out->yscale + out->yoffset - 15.0);
     }
     /* otherwise, draw a floater. */
     else
@@ -121,6 +139,24 @@ status output_graph_plot(
         fprintf(out->fp, "closepath\n");
         fprintf(out->fp, "1 0 0 setrgbcolor\n");
         fprintf(out->fp, "fill\n");
+
+        /* print the moving average. */
+        fprintf(out->fp, "0 0 0 setrgbcolor\n");
+        fprintf(out->fp, "/Courier findfont 8 scalefont setfont\n");
+        fprintf(out->fp, "(%3.1lf) dup stringwidth pop\n", moving_average);
+        fprintf(
+            out->fp, "2 div %lf exch sub %lf moveto show\n",
+            out->xskip + out->prevx,
+            moving_average * out->yscale + out->yoffset - 15.0);
+
+        /* print the weight. */
+        fprintf(out->fp, "1 0 0 setrgbcolor\n");
+        fprintf(out->fp, "/Courier findfont 8 scalefont setfont\n");
+        fprintf(out->fp, "(%3.1lf) dup stringwidth pop\n", weight);
+        fprintf(
+            out->fp, "2 div %lf exch sub %lf moveto show\n",
+            out->xskip + out->prevx,
+            weight * out->yscale + out->yoffset + 15.0);
     }
 
     /* draw a circle where the plot point is. */
